@@ -4,25 +4,21 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class BalanceadorParentesis {
-    public static Boolean isBalanced(final String cadena) {
-        Scanner sc = new Scanner(System.in);
+    Stack pila = new Stack();
 
-        Stack<Character> pila = new Stack<>();
-
-        for (int i = 0; i < cadena.length();i++) {
-            char caracter = cadena.charAt(i);
-            if (caracter == '{' || caracter == '[' || caracter == '(') {
-                pila.push(caracter);
-            } else if (caracter == '}' || caracter == ']' || caracter == ')') {
-                if (pila.isEmpty()) {
+        for (int i = 0; i < cadena.length(); i++) {
+            char primero = cadena.charAt(i);
+            if (primero == '(' || primero == '{' || primero == '[') {
+                pila.push(primero);
+            } else if (primero == ')' || primero == '}' || primero == ']') {
+                if (pila.isEmpty()){
                     return false;
                 }
-                char ultimo = pila.pop();
-                if (caracter == '}' && ultimo != '{' || caracter == ']' && ultimo != '[' || caracter == ')' && ultimo != '(') {
-                    return false;
+                char ultimo = (char) pila.pop();
+                if (primero == '(' && ultimo == ')' || primero == '{' && ultimo == '}' || primero == '[' && ultimo == ']') {
+                    return true;
                 }
             }
         }
         return  pila.isEmpty();
-    }
 }
